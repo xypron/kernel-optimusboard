@@ -1,4 +1,4 @@
-TAG=3.18-rc7
+TAG=3.19-rc1
 
 all: prepare build copy
 
@@ -6,7 +6,6 @@ prepare:
 	test -d linux || git clone -v \
 	https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git \
 	linux
-	cp config/config-$(TAG) linux/.config
 	cd linux && git checkout master
 	cd linux && git fetch
 	cd linux && git rebase
@@ -16,6 +15,10 @@ prepare:
 build:
 	cd linux && git verify-tag v$(TAG)
 	cd linux && git checkout v$(TAG)
+	cd linux && ( git branch -D build || true )
+	cd linux && git checkout -b build
+	cd linux && ../patch/patch-$(TAG)
+	cp config/config-$(TAG) linux/.config
 	cd linux && make clean
 	cd linux && make oldconfig
 	cd linux && make -j6 zImage modules dtbs

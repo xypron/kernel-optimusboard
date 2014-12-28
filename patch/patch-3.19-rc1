@@ -8,3 +8,7 @@ git am ../patch/0004-ARM-dts-sun9i-Add-usb-phy-nodes-to-a80-dtsi.patch
 git am ../patch/0005-ARM-dts-sun9i-Add-USB-host-controller-nodes-to-a80-d.patch
 git am ../patch/0006-ARM-dts-sun9i-Enable-USB-support-on-A80-Optimus-boar.patch
 
+git am ../patch/0001-ARM-sunxi_defconfig-Enable-CONFIG_PHY_SUN9I_USB.patch
+git am ../patch/0002-ARM-multi_v7_defconfig-Enable-CONFIG_PHY_SUN9I_USB.patch
+
+git am ../patch/0001-fixup-clk-sunxi-Add-support-for-sun9i-a80-usb-clocks.patch

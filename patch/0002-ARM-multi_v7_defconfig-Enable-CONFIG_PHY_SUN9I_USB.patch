@@ -1,0 +1,27 @@
+From 28d5061654ba884f69b753cf211a0db128246257 Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Thu, 6 Nov 2014 14:27:08 +0800
+Subject: [PATCH 2/2] ARM: multi_v7_defconfig: Enable CONFIG_PHY_SUN9I_USB
+
+On sun9i we have a new PHY driver for USB.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+---
+ arch/arm/configs/multi_v7_defconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index 2328fe7..8a5827e 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -456,6 +456,7 @@ CONFIG_TI_PIPE3=y
+ CONFIG_PHY_MIPHY365X=y
+ CONFIG_PHY_STIH41X_USB=y
+ CONFIG_PHY_SUN4I_USB=y
++CONFIG_PHY_SUN9I_USB=y
+ CONFIG_EXT4_FS=y
+ CONFIG_AUTOFS4_FS=y
+ CONFIG_MSDOS_FS=y
+-- 
+2.1.3
+

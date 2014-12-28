@@ -1,0 +1,41 @@
+From 498da96f415fa08dcb3dac2d00b0986f55585ede Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Wed, 17 Dec 2014 18:17:34 +0800
+Subject: [PATCH 04/16] clk: sunxi: Fix sun6i_ahb1_clk_determine_rate clock to
+ return clk_hw
+
+The determine_rate clock op callback was changed to return clk_hw in
+commit 646cafc ("clk: Change clk_ops->determine_rate to return a clk_hw
+as the best parent"). This fixes the sun6i AHB1 clock driver.
+
+Fixes: 544473f clk: sunxi: unify sun6i AHB1 clock with proper PLL6 pre-divider
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+---
+ drivers/clk/sunxi/clk-sunxi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/sunxi/clk-sunxi.c b/drivers/clk/sunxi/clk-sunxi.c
+index 8a38070..cc5eab2 100644
+--- a/drivers/clk/sunxi/clk-sunxi.c
++++ b/drivers/clk/sunxi/clk-sunxi.c
+@@ -120,7 +120,7 @@ static long sun6i_ahb1_clk_round(unsigned long rate, u8 *divp, u8 *pre_divp,
+ 
+ static long sun6i_ahb1_clk_determine_rate(struct clk_hw *hw, unsigned long rate,
+ 					  unsigned long *best_parent_rate,
+-					  struct clk **best_parent_clk)
++					  struct clk_hw **best_parent_clk)
+ {
+ 	struct clk *clk = hw->clk, *parent, *best_parent = NULL;
+ 	int i, num_parents;
+@@ -148,7 +148,7 @@ static long sun6i_ahb1_clk_determine_rate(struct clk_hw *hw, unsigned long rate,
+ 	}
+ 
+ 	if (best_parent)
+-		*best_parent_clk = best_parent;
++		*best_parent_clk = __clk_get_hw(best_parent);
+ 	*best_parent_rate = best;
+ 
+ 	return best_child_rate;
+-- 
+2.1.3
+

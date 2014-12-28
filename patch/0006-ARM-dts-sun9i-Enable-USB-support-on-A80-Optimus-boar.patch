@@ -1,18 +1,18 @@
-From 013a64d6e62ebf0e743e2254e2a09a8b97377ccb Mon Sep 17 00:00:00 2001
+From eb582d86bf36bfa9f88a8ab43a76aee172f2e52d Mon Sep 17 00:00:00 2001
 From: Chen-Yu Tsai <wens@csie.org>
-Date: Tue, 4 Nov 2014 12:07:19 +0800
+Date: Fri, 31 Oct 2014 18:24:06 +0800
 Subject: [PATCH 6/6] ARM: dts: sun9i: Enable USB support on A80 Optimus board
 
 Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 ---
- arch/arm/boot/dts/sun9i-a80-optimus.dts | 72 +++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ arch/arm/boot/dts/sun9i-a80-optimus.dts | 60 +++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
 diff --git a/arch/arm/boot/dts/sun9i-a80-optimus.dts b/arch/arm/boot/dts/sun9i-a80-optimus.dts
-index 506948f..31010c1 100644
+index 2d0d490..7fdec74 100644
 --- a/arch/arm/boot/dts/sun9i-a80-optimus.dts
 +++ b/arch/arm/boot/dts/sun9i-a80-optimus.dts
-@@ -59,6 +59,40 @@
+@@ -60,6 +60,40 @@
  	};
  
  	soc {
@@ -50,10 +50,10 @@ index 506948f..31010c1 100644
 +			status = "okay";
 +		};
 +
- 		pio: pinctrl@06000800 {
- 			i2c3_pins_a: i2c3@0 {
- 				/* Enable internal pull-up */
-@@ -76,6 +110,20 @@
+ 		mmc0: mmc@01c0f000 {
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&mmc0_pins>, <&mmc0_cd_pin_optimus>;
+@@ -103,6 +137,20 @@
  				/* Enable internal pull-up */
  				allwinner,pull = <1>;
  			};
@@ -74,35 +74,23 @@ index 506948f..31010c1 100644
  		};
  
  		uart0: serial@07000000 {
-@@ -116,4 +164,28 @@
+@@ -143,4 +191,16 @@
  			gpios = <&pio 7 0 0>;
  		};
  	};
 +
 +	reg_usb0_vbus: usb0-vbus {
-+		compatible = "regulator-fixed";
-+		pinctrl-names = "default";
 +		pinctrl-0 = <&usb0_vbus_pin_optimus>;
-+		regulator-name = "usb0-vbus";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		enable-active-high;
 +		gpio = <&pio 7 4 0>; /* PH4 */
 +		status = "okay";
 +	};
 +
 +	reg_usb2_vbus: usb2-vbus {
-+		compatible = "regulator-fixed";
-+		pinctrl-names = "default";
 +		pinctrl-0 = <&usb2_vbus_pin_optimus>;
-+		regulator-name = "usb2-vbus";
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		enable-active-high;
 +		gpio = <&pio 7 5 0>; /* PH5 */
 +		status = "okay";
 +	};
  };
 -- 
-2.1.4
+2.1.3
 

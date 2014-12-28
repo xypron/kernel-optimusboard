@@ -1,6 +1,6 @@
-From 14d3179a10b49044d5a0d4917a8f7078f1a4a083 Mon Sep 17 00:00:00 2001
+From 5a67f2d23bf7f6333f1aae3c89bc7177ef5eed90 Mon Sep 17 00:00:00 2001
 From: Chen-Yu Tsai <wens@csie.org>
-Date: Tue, 4 Nov 2014 12:07:14 +0800
+Date: Fri, 31 Oct 2014 15:35:18 +0800
 Subject: [PATCH 1/6] clk: sunxi: Add support for sun9i a80 usb clocks and
  resets
 
@@ -13,21 +13,19 @@ clocks into a separate file, and renames them to *_usb_*. Also
 add a per-gate parent index, so we can set different parents for
 each gate.
 
-In time we may move the other usb clock drivers to this file.
-
 Signed-off-by: Chen-Yu Tsai <wens@csie.org>
 ---
  Documentation/devicetree/bindings/clock/sunxi.txt |   5 +
  drivers/clk/sunxi/Makefile                        |   1 +
- drivers/clk/sunxi/clk-usb.c                       | 192 ++++++++++++++++++++++
- 3 files changed, 198 insertions(+)
+ drivers/clk/sunxi/clk-usb.c                       | 200 ++++++++++++++++++++++
+ 3 files changed, 206 insertions(+)
  create mode 100644 drivers/clk/sunxi/clk-usb.c
 
 diff --git a/Documentation/devicetree/bindings/clock/sunxi.txt b/Documentation/devicetree/bindings/clock/sunxi.txt
-index 67b2b99..24d4c88 100644
+index 727c4cf..eec18a8 100644
 --- a/Documentation/devicetree/bindings/clock/sunxi.txt
 +++ b/Documentation/devicetree/bindings/clock/sunxi.txt
-@@ -64,6 +64,8 @@ Required properties:
+@@ -66,6 +66,8 @@ Required properties:
  	"allwinner,sun4i-a10-usb-clk" - for usb gates + resets on A10 / A20
  	"allwinner,sun5i-a13-usb-clk" - for usb gates + resets on A13
  	"allwinner,sun6i-a31-usb-clk" - for usb gates + resets on A31
@@ -36,9 +34,9 @@ index 67b2b99..24d4c88 100644
  
  Required properties for all clocks:
  - reg : shall be the control register address for the clock.
-@@ -81,6 +83,9 @@ Required properties for all clocks:
- And "allwinner,*-usb-clk" clocks also require:
- - reset-cells : shall be set to 1
+@@ -89,6 +91,9 @@ The "allwinner,sun9i-a80-mmc-config-clk" clock also requires:
+ - #reset-cells : shall be set to 1
+ - resets : shall be the reset control phandle for the mmc block.
  
 +"allwinner,sun9i-a80-usb-*-clk" clocks require:
 +- clocks : shall be the usb hci ahb1 gate and peripheral pll clocks
@@ -47,23 +45,23 @@ index 67b2b99..24d4c88 100644
  dummy clocks at 25 MHz and 125 MHz, respectively. See example.
  
 diff --git a/drivers/clk/sunxi/Makefile b/drivers/clk/sunxi/Makefile
-index a66953c..f19ce54 100644
+index 3a5292e..058f273 100644
 --- a/drivers/clk/sunxi/Makefile
 +++ b/drivers/clk/sunxi/Makefile
-@@ -8,6 +8,7 @@ obj-y += clk-a20-gmac.o
- obj-y += clk-mod0.o
+@@ -9,6 +9,7 @@ obj-y += clk-mod0.o
  obj-y += clk-sun8i-mbus.o
  obj-y += clk-sun9i-core.o
+ obj-y += clk-sun9i-mmc.o
 +obj-y += clk-usb.o
  
  obj-$(CONFIG_MFD_SUN6I_PRCM) += \
  	clk-sun6i-ar100.o clk-sun6i-apb0.o clk-sun6i-apb0-gates.o \
 diff --git a/drivers/clk/sunxi/clk-usb.c b/drivers/clk/sunxi/clk-usb.c
 new file mode 100644
-index 0000000..d92ee36
+index 0000000..2d1e3b7c
 --- /dev/null
 +++ b/drivers/clk/sunxi/clk-usb.c
-@@ -0,0 +1,192 @@
+@@ -0,0 +1,200 @@
 +/*
 + * Copyright 2013 Emilio López
 + *
@@ -167,7 +165,7 @@ index 0000000..d92ee36
 +	int i = 0;
 +	int j = 0;
 +
-+	reg = of_iomap(node, 0);
++	reg = of_io_request_and_map(node, 0, of_node_full_name(node));
 +
 +	/* Worst-case size approximation and memory allocation */
 +	qty = find_last_bit((unsigned long *)&data->clk_mask,
@@ -227,7 +225,11 @@ index 0000000..d92ee36
 +
 +static void __init sun9i_a80_usb_mod_setup(struct device_node *node)
 +{
-+	/* AHB1 gate must be enabled to access registers */
++	/*
++	 * AHB1 gate must be enabled to access registers.
++	 * Since most of the gates registered here don't have
++	 * the AHB1 gate as their parent, just enable it here.
++	 */
 +	struct clk *ahb = of_clk_get(node, 0);
 +
 +	WARN_ON(IS_ERR(ahb));
@@ -247,7 +249,11 @@ index 0000000..d92ee36
 +
 +static void __init sun9i_a80_usb_phy_setup(struct device_node *node)
 +{
-+	/* AHB1 gate must be enabled to access registers */
++	/*
++	 * AHB1 gate must be enabled to access registers.
++	 * Since the gates registered here don't have the AHB1
++	 * gate as their parent, just enable it here.
++	 */
 +	struct clk *ahb = of_clk_get(node, 0);
 +
 +	WARN_ON(IS_ERR(ahb));
@@ -257,5 +263,5 @@ index 0000000..d92ee36
 +}
 +CLK_OF_DECLARE(sun9i_a80_usb_phy, "allwinner,sun9i-a80-usb-phy-clk", sun9i_a80_usb_phy_setup);
 -- 
-2.1.4
+2.1.3
 

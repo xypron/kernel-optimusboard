@@ -1,6 +1,6 @@
-From df6a65d6a1121611d4b0f9e823952581069d4efc Mon Sep 17 00:00:00 2001
+From 56dbf6c1274e905c6b7aceb9f64be7425132353e Mon Sep 17 00:00:00 2001
 From: Chen-Yu Tsai <wens@csie.org>
-Date: Tue, 4 Nov 2014 12:07:18 +0800
+Date: Fri, 31 Oct 2014 17:41:15 +0800
 Subject: [PATCH 5/6] ARM: dts: sun9i: Add USB host controller nodes to a80
  dtsi
 
@@ -12,10 +12,10 @@ Signed-off-by: Chen-Yu Tsai <wens@csie.org>
  1 file changed, 70 insertions(+)
 
 diff --git a/arch/arm/boot/dts/sun9i-a80.dtsi b/arch/arm/boot/dts/sun9i-a80.dtsi
-index 1a80e09..b6f344f 100644
+index 078cf97..68bcaea 100644
 --- a/arch/arm/boot/dts/sun9i-a80.dtsi
 +++ b/arch/arm/boot/dts/sun9i-a80.dtsi
-@@ -305,6 +305,28 @@
+@@ -351,6 +351,28 @@
  		 */
  		ranges = <0 0 0 0x20000000>;
  
@@ -44,7 +44,7 @@ index 1a80e09..b6f344f 100644
  		usbphy0: phy@00a00800 {
  			compatible = "allwinner,sun9i-a80-usb-phy";
  			reg = <0x00a00800 0x4>;
-@@ -316,6 +338,32 @@
+@@ -362,6 +384,32 @@
  			#phy-cells = <0>;
  		};
  
@@ -77,7 +77,7 @@ index 1a80e09..b6f344f 100644
  		usbphy1: phy@00a01800 {
  			compatible = "allwinner,sun9i-a80-usb-phy";
  			reg = <0x00a01800 0x4>;
-@@ -330,6 +378,28 @@
+@@ -376,6 +424,28 @@
  			phy_type = "hsic";
  		};
  
@@ -107,5 +107,5 @@ index 1a80e09..b6f344f 100644
  			compatible = "allwinner,sun9i-a80-usb-phy";
  			reg = <0x00a02800 0x4>;
 -- 
-2.1.4
+2.1.3
 

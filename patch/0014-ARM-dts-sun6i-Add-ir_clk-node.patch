@@ -1,0 +1,33 @@
+From 0d6d1dce0469534a9347c1de01435f3cb8f8a4ee Mon Sep 17 00:00:00 2001
+From: Hans de Goede <hdegoede@redhat.com>
+Date: Wed, 17 Dec 2014 18:18:19 +0100
+Subject: [PATCH 14/16] ARM: dts: sun6i: Add ir_clk node
+
+Add an ir_clk sub-node to the prcm node.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+---
+ arch/arm/boot/dts/sun6i-a31.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31.dtsi b/arch/arm/boot/dts/sun6i-a31.dtsi
+index 0332d1c..1e88ccb 100644
+--- a/arch/arm/boot/dts/sun6i-a31.dtsi
++++ b/arch/arm/boot/dts/sun6i-a31.dtsi
+@@ -870,6 +870,13 @@
+ 						"apb0_i2c";
+ 			};
+ 
++			ir_clk: ir_clk {
++				#clock-cells = <0>;
++				compatible = "allwinner,sun4i-a10-mod0-clk";
++				clocks = <&osc32k>, <&osc24M>;
++				clock-output-names = "ir";
++			};
++
+ 			apb0_rst: apb0_rst {
+ 				compatible = "allwinner,sun6i-a31-clock-reset";
+ 				#reset-cells = <1>;
+-- 
+2.1.3
+

@@ -1,6 +1,6 @@
-From ea90dfc367dd947da8ca0350ec279f186d7ed12f Mon Sep 17 00:00:00 2001
+From c104431e27df302501c27e260c56c209b65bae1f Mon Sep 17 00:00:00 2001
 From: Chen-Yu Tsai <wens@csie.org>
-Date: Tue, 4 Nov 2014 12:07:15 +0800
+Date: Fri, 31 Oct 2014 15:39:47 +0800
 Subject: [PATCH 2/6] ARM: dts: sun9i: Add usb clock nodes to a80 dtsi
 
 The USB controller and phy clocks and resets have a separate address
@@ -12,7 +12,7 @@ Signed-off-by: Chen-Yu Tsai <wens@csie.org>
  1 file changed, 22 insertions(+)
 
 diff --git a/arch/arm/boot/dts/sun9i-a80.dtsi b/arch/arm/boot/dts/sun9i-a80.dtsi
-index 494714f..3c25030 100644
+index 7dc09e7..22d10a1 100644
 --- a/arch/arm/boot/dts/sun9i-a80.dtsi
 +++ b/arch/arm/boot/dts/sun9i-a80.dtsi
 @@ -143,6 +143,28 @@
@@ -45,5 +45,5 @@ index 494714f..3c25030 100644
  			#clock-cells = <0>;
  			compatible = "allwinner,sun9i-a80-pll4-clk";
 -- 
-2.1.4
+2.1.3
 

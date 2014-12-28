@@ -1,14 +1,54 @@
 #!/bin/sh
 
-# [PATCH 0/6] ARM: sun9i: Add USB host controller support for A80
+# Patches copied from https://github.com/wens, branch sun9i-usb-v3
+
+# Linux 3.19-rc1
+
+# sunxi-next
+git am ../patch/0001-ARM-dts-sunxi-Fix-usb-phy-support-for-sun4i-sun5i.patch
+git am ../patch/0002-clk-sunxi-Remove-ahb1_sdram-from-sun6i-sun8i-protect.patch
+git am ../patch/0003-clk-sunxi-unify-sun6i-AHB1-clock-with-proper-PLL6-pr.patch
+git am ../patch/0004-clk-sunxi-Fix-sun6i_ahb1_clk_determine_rate-clock-to.patch
+git am ../patch/0005-ARM-dts-sun6i-Unify-ahb1-clock-nodes.patch
+git am ../patch/0006-ARM-dts-sun8i-Unify-ahb1-clock-nodes.patch
+git am ../patch/0007-ARM-dts-sun8i-Add-PLL6-and-MBUS-clock-nodes.patch
+git am ../patch/0008-clk-sunxi-Give-sunxi_factors_register-a-registers-pa.patch
+git am ../patch/0009-clk-sunxi-Fix-factor-clocks-usage-for-sun9i-core-clo.patch
+git am ../patch/0010-ARM-dts-sun6i-Add-pinmux-settings-for-the-ir-pins.patch
+git am ../patch/0011-ARM-dts-sun6i-hummingbird-Add-ethernet-phy-reset-gpi.patch
+git am ../patch/0012-ARM-sunxi-Add-allwinner-sun6i-a31s-to-mach-sunxi.patch
+git am ../patch/0013-clk-sunxi-Make-the-mod0-clk-driver-also-a-platform-d.patch
+git am ../patch/0014-ARM-dts-sun6i-Add-ir_clk-node.patch
+git am ../patch/0015-ARM-dts-sun6i-Add-ir-node.patch
+git am ../patch/0016-ARM-dts-sun6i-Enable-ir-receiver-on-the-Mele-M9.patch
+
+# sunxi-mmc-phase-v2
+git am ../patch/0001-clk-sunxi-Rework-MMC-phase-clocks.patch
+git am ../patch/0002-ARM-sunxi-dt-Add-sample-and-output-mmc-clocks.patch
+git am ../patch/0003-mmc-sunxi-Convert-MMC-driver-to-the-standard-clock-p.patch
+git am ../patch/0004-clk-sunxi-Remove-custom-phase-function.patch
+
+# sun9i-mmc-v2
+git am ../patch/0001-clk-sunxi-Add-mod0-and-mmc-module-clock-support-for-.patch
+git am ../patch/0002-ARM-dts-sun9i-Add-mmc-module-clock-nodes-for-A80.patch
+git am ../patch/0003-clk-sunxi-Add-driver-for-A80-MMC-config-clocks-reset.patch
+git am ../patch/0004-ARM-dts-sun9i-Add-clock-indices-property-for-bus-gat.patch
+git am ../patch/0005-ARM-dts-sun9i-Add-mmc-config-clock-nodes.patch
+git am ../patch/0006-ARM-dts-sunxi-Use-label-to-reference-pio-in-sunxi-co.patch
+git am ../patch/0007-ARM-dts-sun9i-Add-mmc-controller-nodes-to-the-A80-dt.patch
+git am ../patch/0008-ARM-dts-sun9i-Add-pinmux-setting-for-mmc0.patch
+git am ../patch/0009-ARM-dts-sun9i-Enable-mmc0-on-A80-Optimus-Board.patch
+git am ../patch/0010-ARM-dts-sun9i-Add-8-bit-mmc-pinmux-setting-for-mmc2.patch
+git am ../patch/0011-ARM-dts-sun9i-Enable-mmc2-on-A80-Optimus-Board.patch
+
+# sun9i-usb-v3
 git am ../patch/0001-clk-sunxi-Add-support-for-sun9i-a80-usb-clocks-and-r.patch
 git am ../patch/0002-ARM-dts-sun9i-Add-usb-clock-nodes-to-a80-dtsi.patch
 git am ../patch/0003-phy-Add-driver-to-support-individual-USB-PHYs-on-sun.patch
 git am ../patch/0004-ARM-dts-sun9i-Add-usb-phy-nodes-to-a80-dtsi.patch
 git am ../patch/0005-ARM-dts-sun9i-Add-USB-host-controller-nodes-to-a80-d.patch
 git am ../patch/0006-ARM-dts-sun9i-Enable-USB-support-on-A80-Optimus-boar.patch
-
 git am ../patch/0001-ARM-sunxi_defconfig-Enable-CONFIG_PHY_SUN9I_USB.patch
 git am ../patch/0002-ARM-multi_v7_defconfig-Enable-CONFIG_PHY_SUN9I_USB.patch
-
 git am ../patch/0001-fixup-clk-sunxi-Add-support-for-sun9i-a80-usb-clocks.patch
+

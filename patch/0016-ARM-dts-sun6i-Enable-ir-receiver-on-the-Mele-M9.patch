@@ -1,0 +1,32 @@
+From 9681d33080a0c6f59d544792c631101617924ba1 Mon Sep 17 00:00:00 2001
+From: Hans de Goede <hdegoede@redhat.com>
+Date: Wed, 17 Dec 2014 18:18:22 +0100
+Subject: [PATCH 16/16] ARM: dts: sun6i: Enable ir receiver on the Mele M9
+
+The Mele M9 has an ir receiver, enable it.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+---
+ arch/arm/boot/dts/sun6i-a31-m9.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31-m9.dts b/arch/arm/boot/dts/sun6i-a31-m9.dts
+index 3ab544f..fccf709 100644
+--- a/arch/arm/boot/dts/sun6i-a31-m9.dts
++++ b/arch/arm/boot/dts/sun6i-a31-m9.dts
+@@ -121,6 +121,12 @@
+ 				reg = <1>;
+ 			};
+ 		};
++
++		ir@01f02000 {
++			pinctrl-names = "default";
++			pinctrl-0 = <&ir_pins_a>;
++			status = "okay";
++		};
+ 	};
+ 
+ 	leds {
+-- 
+2.1.3
+

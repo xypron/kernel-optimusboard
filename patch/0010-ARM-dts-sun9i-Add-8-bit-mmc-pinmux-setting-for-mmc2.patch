@@ -1,0 +1,39 @@
+From a9fa94593d65b765d857f8c7f540a775aafb209b Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 25 Nov 2014 17:06:46 +0800
+Subject: [PATCH 10/11] ARM: dts: sun9i: Add 8 bit mmc pinmux setting for mmc2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+mmc2 is available on port C. Add a pinmux setting for 8 bit wide eMMC.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Andreas Färber <afaerber@suse.de>
+---
+ arch/arm/boot/dts/sun9i-a80.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun9i-a80.dtsi b/arch/arm/boot/dts/sun9i-a80.dtsi
+index b42e2e7..7dc09e7 100644
+--- a/arch/arm/boot/dts/sun9i-a80.dtsi
++++ b/arch/arm/boot/dts/sun9i-a80.dtsi
+@@ -474,6 +474,15 @@
+ 				allwinner,pull = <0>;
+ 			};
+ 
++			mmc2_8bit_pins: mmc2_8bit {
++				allwinner,pins = "PC6", "PC7", "PC8", "PC9",
++						 "PC10", "PC11", "PC12",
++						 "PC13", "PC14", "PC15";
++				allwinner,function = "mmc2";
++				allwinner,drive = <2>;
++				allwinner,pull = <1>;
++			};
++
+ 			uart0_pins_a: uart0@0 {
+ 				allwinner,pins = "PH12", "PH13";
+ 				allwinner,function = "uart0";
+-- 
+2.1.3
+

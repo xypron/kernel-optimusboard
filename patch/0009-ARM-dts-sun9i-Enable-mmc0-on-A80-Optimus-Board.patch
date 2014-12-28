@@ -1,0 +1,66 @@
+From e26a41a65d547ee544a426098f8f9aa909dcd3cf Mon Sep 17 00:00:00 2001
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Tue, 25 Nov 2014 13:35:10 +0800
+Subject: [PATCH 09/11] ARM: dts: sun9i: Enable mmc0 on A80 Optimus Board
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Enable the micro-sd slot on the A80 Optimus Board, which is connected to
+mmc0. This adds the card-detect gpio and enables mmc0.
+
+This patch also adds a 3V fixed regulator, which is the default I/O
+voltage level.
+
+Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+Signed-off-by: Andreas Färber <afaerber@suse.de>
+---
+ arch/arm/boot/dts/sun9i-a80-optimus.dts | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun9i-a80-optimus.dts b/arch/arm/boot/dts/sun9i-a80-optimus.dts
+index 506948f..4c94aff 100644
+--- a/arch/arm/boot/dts/sun9i-a80-optimus.dts
++++ b/arch/arm/boot/dts/sun9i-a80-optimus.dts
+@@ -49,6 +49,7 @@
+ 
+ /dts-v1/;
+ /include/ "sun9i-a80.dtsi"
++/include/ "sunxi-common-regulators.dtsi"
+ 
+ / {
+ 	model = "Merrii A80 Optimus Board";
+@@ -59,6 +60,16 @@
+ 	};
+ 
+ 	soc {
++		mmc0: mmc@01c0f000 {
++			pinctrl-names = "default";
++			pinctrl-0 = <&mmc0_pins>, <&mmc0_cd_pin_optimus>;
++			vmmc-supply = <&reg_vcc3v0>;
++			bus-width = <4>;
++			cd-gpios = <&pio 7 18 0>; /* PH8 */
++			cd-inverted;
++			status = "okay";
++		};
++
+ 		pio: pinctrl@06000800 {
+ 			i2c3_pins_a: i2c3@0 {
+ 				/* Enable internal pull-up */
+@@ -72,6 +83,13 @@
+ 				allwinner,pull = <0>;
+ 			};
+ 
++			mmc0_cd_pin_optimus: mmc0_cd_pin@0 {
++				allwinner,pins = "PH18";
++				allwinner,function = "gpio_in";
++				allwinner,drive = <0>;
++				allwinner,pull = <1>;
++			};
++
+ 			uart4_pins_a: uart4@0 {
+ 				/* Enable internal pull-up */
+ 				allwinner,pull = <1>;
+-- 
+2.1.3
+

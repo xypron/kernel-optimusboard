@@ -1,6 +1,6 @@
-From 65205d6a2e2d22259a42cd76880da508583b7ac8 Mon Sep 17 00:00:00 2001
+From 0fe90684a6287e8db973261378eae8e95358e3e0 Mon Sep 17 00:00:00 2001
 From: Chen-Yu Tsai <wens@csie.org>
-Date: Tue, 4 Nov 2014 12:07:17 +0800
+Date: Fri, 31 Oct 2014 17:30:50 +0800
 Subject: [PATCH 4/6] ARM: dts: sun9i: Add usb phy nodes to a80 dtsi
 
 On sun9i, there are 3 independent usb phys. Add device nodes for them.
@@ -11,10 +11,10 @@ Signed-off-by: Chen-Yu Tsai <wens@csie.org>
  1 file changed, 37 insertions(+)
 
 diff --git a/arch/arm/boot/dts/sun9i-a80.dtsi b/arch/arm/boot/dts/sun9i-a80.dtsi
-index 3c25030..1a80e09 100644
+index 22d10a1..078cf97 100644
 --- a/arch/arm/boot/dts/sun9i-a80.dtsi
 +++ b/arch/arm/boot/dts/sun9i-a80.dtsi
-@@ -305,6 +305,43 @@
+@@ -351,6 +351,43 @@
  		 */
  		ranges = <0 0 0 0x20000000>;
  
@@ -55,9 +55,9 @@ index 3c25030..1a80e09 100644
 +			#phy-cells = <0>;
 +		};
 +
- 		gic: interrupt-controller@01c41000 {
- 			compatible = "arm,cortex-a7-gic", "arm,cortex-a15-gic";
- 			reg = <0x01c41000 0x1000>,
+ 		mmc0: mmc@01c0f000 {
+ 			compatible = "allwinner,sun5i-a13-mmc";
+ 			reg = <0x01c0f000 0x1000>;
 -- 
-2.1.4
+2.1.3
 

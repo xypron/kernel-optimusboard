@@ -1,4 +1,4 @@
-TAG=3.19-rc1
+TAG=3.19-rc2
 
 all: prepare build copy
 
@@ -19,22 +19,25 @@ build:
 	cd linux && git checkout -b build
 	cd linux && ../patch/patch-$(TAG)
 	cp config/config-$(TAG) linux/.config
-	cd linux && make clean
 	cd linux && make oldconfig
+	rm linux/arch/arm/boot/zImage
 	cd linux && make -j6 zImage modules dtbs
+	cat linux/arch/arm/boot/dts/sun9i-a80-optimus.dtb >> \
+	linux/arch/arm/boot/zImage
+	cd linux && make LOADADDR=0x20007800 uImage
+
+clean:
+	cd linux && make clean
 
 copy:
 	rm linux/deploy -rf
-	mkdir -p linux/deploy/dtbs
+	mkdir -p linux/deploy
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
 	cp linux/.config linux/deploy/config-$$VERSION
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
-	cp linux/arch/arm/boot/zImage linux/deploy/$$VERSION.zImage
+	cp linux/arch/arm/boot/uImage linux/deploy/$$VERSION.uImage
 	cd linux && make modules_install INSTALL_MOD_PATH=deploy
 	cd linux && make headers_install INSTALL_HDR_PATH=deploy/usr
-	find linux/arch/arm/boot/dts/ -name *.dtb -exec cp {} linux/deploy/dtbs \;
-	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
-	cd linux/deploy && tar -czf $$VERSION-dtbs.tar.gz dtbs
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
 	mkdir -p -m 755 linux/deploy/lib/firmware/$$VERSION; true
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
@@ -48,11 +51,9 @@ copy:
 install:
 	mkdir -p -m 755 $(DESTDIR)/boot;true
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
-	cp linux/deploy/$$VERSION.zImage $(DESTDIR)/boot;true
+	cp linux/deploy/$$VERSION.uImage $(DESTDIR)/boot;true
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
 	cp linux/deploy/config-$$VERSION $(DESTDIR)/boot;true
-	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
-	cp linux/deploy/$$VERSION-dtbs.tar.gz $(DESTDIR)/boot;true
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
 	cp linux/deploy/$$VERSION-modules-firmware.tar.gz $(DESTDIR)/boot;true
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \

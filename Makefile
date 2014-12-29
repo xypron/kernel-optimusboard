@@ -20,7 +20,7 @@ build:
 	cd linux && ../patch/patch-$(TAG)
 	cp config/config-$(TAG) linux/.config
 	cd linux && make oldconfig
-	rm linux/arch/arm/boot/zImage
+	rm -f linux/arch/arm/boot/zImage
 	cd linux && make -j6 zImage modules dtbs
 	cat linux/arch/arm/boot/dts/sun9i-a80-optimus.dtb >> \
 	linux/arch/arm/boot/zImage

@@ -24,7 +24,7 @@ build:
 	cd linux && make -j6 zImage modules dtbs
 	cat linux/arch/arm/boot/dts/sun9i-a80-optimus.dtb >> \
 	linux/arch/arm/boot/zImage
-	cd linux && make LOADADDR=0x20007800 uImage
+	cd linux && make LOADADDR=0x40008000 uImage
 
 clean:
 	cd linux && make clean
@@ -36,6 +36,9 @@ copy:
 	cp linux/.config linux/deploy/config-$$VERSION
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
 	cp linux/arch/arm/boot/uImage linux/deploy/$$VERSION.uImage
+	dd if=/dev/zero of=linux/deploy/dummy bs=1024 count=4
+	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \
+	cat linux/deploy/dummy >> linux/deploy/$$VERSION.uImage
 	cd linux && make modules_install INSTALL_MOD_PATH=deploy
 	cd linux && make headers_install INSTALL_HDR_PATH=deploy/usr
 	VERSION=$$(cd linux && make --no-print-directory kernelversion) && \

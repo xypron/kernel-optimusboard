@@ -53,4 +53,4 @@ git am ../patch/0002-ARM-multi_v7_defconfig-Enable-CONFIG_PHY_SUN9I_USB.patch
 git am ../patch/0001-fixup-clk-sunxi-Add-support-for-sun9i-a80-usb-clocks.patch
 
 # CPU clocks
-git am ../patch/0001-ARM-dts-sun9i-Add-clock-frequency-to-the-CPU-nodes.patch
+git am ../patch/0001-ARM-dts-sun9i-A80-cpu-operating-points.patch

@@ -1,0 +1,48 @@
+From f44da45baea3542df26a064763af1b86f03d253c Mon Sep 17 00:00:00 2001
+From: Heinrich Schuchardt <xypron.glpk@gmx.de>
+Date: Wed, 31 Dec 2014 04:06:41 +0100
+Subject: [PATCH] ARM: dts: sun9i: A80 cpu operating points
+
+Set the cpu operating points of the A80 cpu.
+
+Signed-off-by: Heinrich Schuchardt <xypron.glpk@gmx.de>
+---
+ arch/arm/boot/dts/sun9i-a80.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/arch/arm/boot/dts/sun9i-a80.dtsi b/arch/arm/boot/dts/sun9i-a80.dtsi
+index a8c18a4..3d46c0c 100644
+--- a/arch/arm/boot/dts/sun9i-a80.dtsi
++++ b/arch/arm/boot/dts/sun9i-a80.dtsi
+@@ -70,6 +70,14 @@
+ 			compatible = "arm,cortex-a7";
+ 			device_type = "cpu";
+ 			reg = <0x0>;
++		        operating-points = <
++				/* kHz	uV */
++				1200000	1020000
++				1128000	960000
++				1008000	900000
++				864000	840000
++		        >;
+ 		};
+ 
+ 		cpu1: cpu@1 {
+@@ -94,6 +102,13 @@
+ 			compatible = "arm,cortex-a15";
+ 			device_type = "cpu";
+ 			reg = <0x100>;
++		        operating-points = <
++				/* kHz	uV */
++				1800000	1080000
++				1608000	1000000
++				1536000	960000
++				1440000	900000
++				1296000	840000
++		        >;
+ 		};
+ 
+ 		cpu5: cpu@101 {
+-- 
+2.1.4
+
